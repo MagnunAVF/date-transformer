@@ -2,10 +2,16 @@ from re import split
 
 from src.models.new_date_time import NewDateTime
 from src.exceptions.new_date_time_exceptions import *
+from src.exceptions.date_transformer_exceptions import *
 
 class DateTransformer:
     def change_date(self, date, op, value):
-        return date
+        if op == "+":
+            return True
+        elif op == "-":
+            return True
+        else:
+            raise InvalidOperatorException
 
     def _date_extractor_from_str(self, date_str):
         try:

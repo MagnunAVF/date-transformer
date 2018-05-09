@@ -9,6 +9,7 @@ from src.exceptions.new_date_time_exceptions import HourOutOfRange
 from src.exceptions.new_date_time_exceptions import NegativeYear
 from src.exceptions.new_date_time_exceptions import MonthOutOfRange
 from src.exceptions.new_date_time_exceptions import DayOutOfRange
+from src.exceptions.date_transformer_exceptions import InvalidOperatorException
 
 
 class TestDateTransformer(unittest.TestCase):
@@ -24,7 +25,13 @@ class TestDateTransformer(unittest.TestCase):
         result = self.date_transformer.change_date(
                                                 "01/03/2010 23:00", '+', 4000)
 
-        self.assertEqual(result, "01/03/2010 23:00")
+        self.assertEqual(result, True)
+
+    def test_change_date_with_invalid_op_arg(self):
+        """It should raise an Exception when input op is invalid"""
+
+        with self.assertRaises(InvalidOperatorException):
+            self.date_transformer.change_date("01/03/2010 23:00", '?', 4000)
 
     def test_date_extractor_from_str_with_invalid_str(self):
         """It should raise an exception when input string is invalid."""
