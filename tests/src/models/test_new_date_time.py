@@ -5,6 +5,7 @@ from random import randint
 
 from src.models.new_date_time import NewDateTime
 from src.exceptions.new_date_time_exceptions import MinuteOutOfRange
+from src.exceptions.new_date_time_exceptions import HourOutOfRange
 
 
 class TestNewDateTime(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestNewDateTime(unittest.TestCase):
                                         randint(0, 100),
                                         randint(0, 100),
                                         randint(0, 100),
-                                        randint(0, 100),
+                                        randint(0, 23),
                                         randint(0, 59))
 
     def test_day_integer_validation(self):
@@ -82,6 +83,19 @@ class TestNewDateTime(unittest.TestCase):
         self.valid_new_date_time.hour = 22
 
         self.assertEqual(self.valid_new_date_time.hour, 22)
+
+    def test_hour_range(self):
+        """It is NOT valid with hour out of the range (00 to 23)."""
+
+        self.assertRaises(
+            HourOutOfRange,
+            NewDateTime,
+            12, 4, 1999, randint(-10000, 0), 33)
+
+        self.assertRaises(
+            HourOutOfRange,
+            NewDateTime,
+            12, 4, 1999, randint(24, 10000), 33)
 
     def test_minute_integer_validation(self):
         """It is NOT valid with the minute being of a different type of integer

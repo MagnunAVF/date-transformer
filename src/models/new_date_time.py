@@ -44,6 +44,9 @@ class NewDateTime:
 
     @hour.setter
     def hour(self, value):
+        if value < 0 or value > 23:
+            raise HourOutOfRange("Hour must be in the range of 0 to 23")
+
         message = "Hour can only be an instance of integer."
         self._validate_integer(value, message)
         self._hour = value
