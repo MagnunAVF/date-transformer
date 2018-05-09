@@ -9,3 +9,6 @@ class NegativeYear(Exception):
 
 class MonthOutOfRange(Exception):
     pass
+
+class DayOutOfRange(Exception):
+    pass
