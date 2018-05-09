@@ -11,12 +11,19 @@ class DateTransformer:
 
         minutes_value = abs(value)
 
+        try:
+            datetime = self._date_extractor_from_str(date)
+        except(Exception) as e:
+            return e
+
         if op == "+":
             return True
         elif op == "-":
             return True
         else:
             raise InvalidOperatorException
+
+        return True
 
     def _date_extractor_from_str(self, date_str):
         try:
@@ -57,3 +64,10 @@ class DateTransformer:
             result = (hours - remainder)/24
             return (int(result), remainder)
         return (0, hours)
+
+    def _extract_years(self, days):
+        if days > 364:
+            remainder = days % 365
+            result = (days - remainder)/365
+            return (int(result), remainder)
+        return (0, days)

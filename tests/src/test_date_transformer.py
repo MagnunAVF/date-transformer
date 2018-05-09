@@ -119,3 +119,19 @@ class TestDateTransformer(unittest.TestCase):
 
         self.assertTupleEqual(self.date_transformer._extract_days(
                                 exactly_one_day), (1, 0))
+
+    def test_extract_years(self):
+        """It should return the years and the remainder days."""
+
+        years_and_remainder_days = 740
+        only_days = 200
+        exactly_one_year = 365
+
+        self.assertTupleEqual(self.date_transformer._extract_years(
+                                only_days), (0, 200))
+
+        self.assertTupleEqual(self.date_transformer._extract_years(
+                                years_and_remainder_days), (2, 10))
+
+        self.assertTupleEqual(self.date_transformer._extract_years(
+                                exactly_one_year), (1, 0))
