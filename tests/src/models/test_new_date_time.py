@@ -7,6 +7,7 @@ from src.models.new_date_time import NewDateTime
 from src.exceptions.new_date_time_exceptions import MinuteOutOfRange
 from src.exceptions.new_date_time_exceptions import HourOutOfRange
 from src.exceptions.new_date_time_exceptions import NegativeYear
+from src.exceptions.new_date_time_exceptions import MonthOutOfRange
 
 
 class TestNewDateTime(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestNewDateTime(unittest.TestCase):
         self.fake = Faker()
         self.valid_new_date_time = NewDateTime(
                                         randint(0, 100),
-                                        randint(0, 100),
+                                        randint(1, 12),
                                         randint(0, 10000),
                                         randint(0, 23),
                                         randint(0, 59))
@@ -52,6 +53,19 @@ class TestNewDateTime(unittest.TestCase):
         self.valid_new_date_time.month = 4
 
         self.assertEqual(self.valid_new_date_time.month, 4)
+
+    def test_month_range(self):
+        """It is NOT valid with month out of the range (01 to 12)."""
+
+        self.assertRaises(
+            MonthOutOfRange,
+            NewDateTime,
+            12, randint(-10000, 0), 1999, 13, 33)
+
+        self.assertRaises(
+            MonthOutOfRange,
+            NewDateTime,
+            12, randint(13, 10000), 1999, 13, 33)
 
     def test_year_integer_validation(self):
         """It is NOT valid with the year being of a different type of integer

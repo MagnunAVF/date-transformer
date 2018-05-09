@@ -24,6 +24,9 @@ class NewDateTime:
 
     @month.setter
     def month(self, value):
+        if value < 1 or value > 12:
+            raise MonthOutOfRange("Month must be in the range of 1 to 12")
+
         message = "Month can only be an instance of integer."
         self._validate_integer(value, message)
         self._month = value
