@@ -1,3 +1,5 @@
+from src.exceptions.new_date_time_exceptions import *
+
 class NewDateTime:
     def __init__(self, day, month, year, hour, minute):
         self.day = day
@@ -52,8 +54,12 @@ class NewDateTime:
 
     @minute.setter
     def minute(self, value):
+        if value < 0 or value > 59:
+            raise MinuteOutOfRange("Minute must be in the range of 0 to 59")
+
         message = "Minute can only be an instance of integer."
         self._validate_integer(value, message)
+
         self._minute = value
 
     def _validate_integer(self, value, message):

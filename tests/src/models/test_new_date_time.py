@@ -4,6 +4,7 @@ from faker import Faker
 from random import randint
 
 from src.models.new_date_time import NewDateTime
+from src.exceptions.new_date_time_exceptions import MinuteOutOfRange
 
 
 class TestNewDateTime(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestNewDateTime(unittest.TestCase):
                                         randint(0, 100),
                                         randint(0, 100),
                                         randint(0, 100),
-                                        randint(0, 100))
+                                        randint(0, 59))
 
     def test_day_integer_validation(self):
         """It is NOT valid with the day being of a different type of integer
@@ -97,3 +98,16 @@ class TestNewDateTime(unittest.TestCase):
         self.valid_new_date_time.minute = 44
 
         self.assertEqual(self.valid_new_date_time.minute, 44)
+
+    def test_minute_range(self):
+        """It is NOT valid with minute out of the range (00 to 59)."""
+
+        self.assertRaises(
+            MinuteOutOfRange,
+            NewDateTime,
+            12, 4, 1999, 3, randint(-10000, 0))
+
+        self.assertRaises(
+            MinuteOutOfRange,
+            NewDateTime,
+            12, 4, 1999, 3, randint(60, 10000))

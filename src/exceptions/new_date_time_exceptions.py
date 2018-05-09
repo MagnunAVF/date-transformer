@@ -1,0 +1,2 @@
+class MinuteOutOfRange(Exception):
+    pass
