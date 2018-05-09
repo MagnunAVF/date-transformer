@@ -6,6 +6,7 @@ from random import randint
 from src.models.new_date_time import NewDateTime
 from src.exceptions.new_date_time_exceptions import MinuteOutOfRange
 from src.exceptions.new_date_time_exceptions import HourOutOfRange
+from src.exceptions.new_date_time_exceptions import NegativeYear
 
 
 class TestNewDateTime(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestNewDateTime(unittest.TestCase):
         self.valid_new_date_time = NewDateTime(
                                         randint(0, 100),
                                         randint(0, 100),
-                                        randint(0, 100),
+                                        randint(0, 10000),
                                         randint(0, 23),
                                         randint(0, 59))
 
@@ -67,6 +68,14 @@ class TestNewDateTime(unittest.TestCase):
         self.valid_new_date_time.year = 1991
 
         self.assertEqual(self.valid_new_date_time.year, 1991)
+
+    def test_negative_year(self):
+        """It is NOT valid with a negative year."""
+
+        self.assertRaises(
+            NegativeYear,
+            NewDateTime,
+            12, 4, randint(-10000, 0), 13, 33)
 
     def test_hour_integer_validation(self):
         """It is NOT valid with the hour being of a different type of integer

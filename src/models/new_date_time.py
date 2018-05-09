@@ -34,6 +34,9 @@ class NewDateTime:
 
     @year.setter
     def year(self, value):
+        if value < 0:
+            raise NegativeYear("Year can NOT be negative")
+
         message = "Year can only be an instance of integer."
         self._validate_integer(value, message)
         self._year = value

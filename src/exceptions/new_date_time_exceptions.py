@@ -3,3 +3,6 @@ class MinuteOutOfRange(Exception):
 
 class HourOutOfRange(Exception):
     pass
+
+class NegativeYear(Exception):
+    pass
