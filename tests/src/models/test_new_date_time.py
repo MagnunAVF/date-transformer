@@ -1,5 +1,8 @@
 import unittest
 
+from faker import Faker
+from random import randint
+
 from src.models.new_date_time import NewDateTime
 
 
@@ -7,59 +10,90 @@ class TestNewDateTime(unittest.TestCase):
     """ Test NewDateTime model."""
 
     def setUp(self):
-        self.valid_new_date_time = NewDateTime(12, 4, 1999, 3, 34)
+        self.fake = Faker()
+        self.valid_new_date_time = NewDateTime(
+                                        randint(0, 100),
+                                        randint(0, 100),
+                                        randint(0, 100),
+                                        randint(0, 100),
+                                        randint(0, 100))
 
-    def test_day_validation(self):
+    def test_day_integer_validation(self):
         """It is NOT valid with the day being of a different type of integer
-        when creating or changing the variable"""
+        when creating or changing the variable."""
 
         self.assertRaises(TypeError, NewDateTime, "12", 4, 1999, 3, 34)
 
         with self.assertRaises(TypeError):
-            self.valid_new_date_time.day = "foo"
+            self.valid_new_date_time.day = self.fake.name()
+
+    def test_day_getter(self):
+        """It returns the correct day value."""
+
+        self.valid_new_date_time.day = 12
 
         self.assertEqual(self.valid_new_date_time.day, 12)
 
-    def test_month_validation(self):
+    def test_month_integer_validation(self):
         """It is NOT valid with the month being of a different type of integer
-        when creating or changing the variable"""
+        when creating or changing the variable."""
 
         self.assertRaises(TypeError, NewDateTime, 12, "4", 1999, 3, 34)
 
         with self.assertRaises(TypeError):
-            self.valid_new_date_time.month = "foo"
+            self.valid_new_date_time.month = self.fake.name()
+
+    def test_month_getter(self):
+        """It returns the correct month value."""
+
+        self.valid_new_date_time.month = 4
 
         self.assertEqual(self.valid_new_date_time.month, 4)
 
-    def test_year_validation(self):
+    def test_year_integer_validation(self):
         """It is NOT valid with the year being of a different type of integer
-        when creating or changing the variable"""
+        when creating or changing the variable."""
 
         self.assertRaises(TypeError, NewDateTime, 12, 4, "1999", 3, 34)
 
         with self.assertRaises(TypeError):
-            self.valid_new_date_time.year = "foo"
+            self.valid_new_date_time.year = self.fake.name()
 
-        self.assertEqual(self.valid_new_date_time.year, 1999)
+    def test_year_getter(self):
+        """It returns the correct year value."""
 
-    def test_hour_validation(self):
+        self.valid_new_date_time.year = 1991
+
+        self.assertEqual(self.valid_new_date_time.year, 1991)
+
+    def test_hour_integer_validation(self):
         """It is NOT valid with the hour being of a different type of integer
-        when creating or changing the variable"""
+        when creating or changing the variable."""
 
         self.assertRaises(TypeError, NewDateTime, 12, 4, 1999, "3", 34)
 
         with self.assertRaises(TypeError):
-            self.valid_new_date_time.hour = "foo"
+            self.valid_new_date_time.hour = self.fake.name()
 
-        self.assertEqual(self.valid_new_date_time.hour, 3)
+    def test_hour_getter(self):
+        """It returns the correct hour value."""
 
-    def test_minute_validation(self):
+        self.valid_new_date_time.hour = 22
+
+        self.assertEqual(self.valid_new_date_time.hour, 22)
+
+    def test_minute_integer_validation(self):
         """It is NOT valid with the minute being of a different type of integer
-        when creating or changing the variable"""
+        when creating or changing the variable."""
 
         self.assertRaises(TypeError, NewDateTime, 12, 4, 1999, 3, "34")
 
         with self.assertRaises(TypeError):
             self.valid_new_date_time.minute = "foo"
 
-        self.assertEqual(self.valid_new_date_time.minute, 34)
+    def test_minute_getter(self):
+        """It returns the correct minute value."""
+
+        self.valid_new_date_time.minute = 44
+
+        self.assertEqual(self.valid_new_date_time.minute, 44)
