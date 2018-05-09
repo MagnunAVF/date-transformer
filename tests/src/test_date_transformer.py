@@ -74,3 +74,19 @@ class TestDateTransformer(unittest.TestCase):
         with self.assertRaises(MinuteOutOfRange):
             self.date_transformer._date_extractor_from_str(
                                             invalid_datetime_min_str)
+
+    def test_extract_hours(self):
+        """It should return the hours and the remainder minutes."""
+
+        hours_and_remainder_minutes = 253
+        only_minutes = 45
+        exactly_one_hour = 60
+
+        self.assertTupleEqual(self.date_transformer._extract_hours(
+                                only_minutes), (0, 45))
+
+        self.assertTupleEqual(self.date_transformer._extract_hours(
+                                hours_and_remainder_minutes), (4, 13))
+
+        self.assertTupleEqual(self.date_transformer._extract_hours(
+                                exactly_one_hour), (1, 0))

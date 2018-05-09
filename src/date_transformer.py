@@ -32,3 +32,10 @@ class DateTransformer:
             raise e
 
         return result_datetime
+
+    def _extract_hours(self, minutes):
+        if minutes > 59:
+            remainder = minutes % 60
+            result = (minutes - remainder)/60
+            return (int(result), remainder)
+        return (0, minutes)
