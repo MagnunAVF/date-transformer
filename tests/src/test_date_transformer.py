@@ -27,6 +27,12 @@ class TestDateTransformer(unittest.TestCase):
 
         self.assertEqual(result, "30/05/1991 13:27")
 
+    def test_change_date_with_invalid_date(self):
+        """It raises an Exception with a invalid date string."""
+
+        with self.assertRaises(Exception):
+            self.date_transformer.change_date("foo 13:17", '+', 10)
+
     def test_change_date_with_invalid_value_arg(self):
         """It should raise an Exception when input minutes value is invalid."""
 
@@ -34,10 +40,16 @@ class TestDateTransformer(unittest.TestCase):
             self.date_transformer.change_date("01/03/2010 23:00", '-', "teste")
 
     def test_change_date_with_invalid_op_arg(self):
-        """It should raise an Exception when input op is invalid"""
+        """It should raise an Exception when input op is invalid."""
 
         with self.assertRaises(InvalidOperatorException):
             self.date_transformer.change_date("01/03/2010 23:00", '?', 4000)
+
+    def test_change_date_not_implemented_op(self):
+        """It should raise an Exceptionwith - op."""
+
+        with self.assertRaises(NotImplementedError):
+            self.date_transformer.change_date("01/03/2010 23:00", '-', 4000)
 
     def test_add_to_date_from_minutes_to_hours_transition(self):
         """It should sum input minutes to datetime and correctly execute the

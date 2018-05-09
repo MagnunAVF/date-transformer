@@ -14,12 +14,12 @@ class DateTransformer:
         try:
             datetime = self._date_extractor_from_str(date)
         except(Exception) as e:
-            return e
+            raise e
 
         if op == "+":
             result_datetime = self._add_to_datetime(datetime, minutes_value)
         elif op == "-":
-            result_datetime = self._add_to_datetime(datetime, minutes_value)
+            raise NotImplementedError
         else:
             raise InvalidOperatorException
 
