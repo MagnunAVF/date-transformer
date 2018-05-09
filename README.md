@@ -31,3 +31,6 @@ make test
 * [Pytest](https://docs.pytest.org/en/latest/)
 
 # Notes
+* This project was developed with TDD;
+* Only the + operation was implemented.
+* The intention was to recreate the python datetime object and create an entity that performs operations on that data type
