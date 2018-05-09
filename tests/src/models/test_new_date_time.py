@@ -179,3 +179,10 @@ class TestNewDateTime(unittest.TestCase):
             MinuteOutOfRange,
             NewDateTime,
             12, 4, 1999, 3, randint(60, 10000))
+
+    def test__str__(self):
+        date_time = NewDateTime(30, 5, 1991, 13, 27)
+
+        str_result = str(date_time)
+
+        self.assertEqual(str_result, "30/05/1991 13:27")

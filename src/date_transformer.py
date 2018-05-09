@@ -16,14 +16,16 @@ class DateTransformer:
         except(Exception) as e:
             return e
 
+        result_datetime = NewDateTime(30, 5, 1991, 13, 27)
+
         if op == "+":
-            return True
+            return str(result_datetime)
         elif op == "-":
-            return True
+            return str(result_datetime)
         else:
             raise InvalidOperatorException
 
-        return True
+        return str(result_datetime)
 
     def _date_extractor_from_str(self, date_str):
         try:

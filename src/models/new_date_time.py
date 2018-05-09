@@ -97,3 +97,11 @@ class NewDateTime:
 
         if day < 1 or day > self.DAYS_OF_A_MONTH[reference_month]['days']:
             raise DayOutOfRange("Day must respect the month days range")
+
+    def __str__(self):
+        _str = "{}/{}/{} {}:{}".format( str(self.day).zfill(2),
+                                        str(self.month).zfill(2),
+                                        str(self.year).zfill(4),
+                                        str(self.hour).zfill(2),
+                                        str(self.minute).zfill(2))
+        return _str

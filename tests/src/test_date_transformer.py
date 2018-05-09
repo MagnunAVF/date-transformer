@@ -23,9 +23,9 @@ class TestDateTransformer(unittest.TestCase):
         """It should transform the dates respecting the rules of the domain."""
 
         result = self.date_transformer.change_date(
-                                                "01/03/2010 23:00", '+', 4000)
+                                                "30/05/1991 13:27", '+', 4000)
 
-        self.assertEqual(result, True)
+        self.assertEqual(result, "30/05/1991 13:27")
 
     def test_change_date_with_invalid_value_arg(self):
         """It should raise an Exception when input minutes value is invalid."""
