@@ -12,8 +12,8 @@ class NewDateTime:
 
     @day.setter
     def day(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Day can only be an instance of integer.")
+        message = "Day can only be an instance of integer."
+        self._validate_integer(value, message)
         self._day = value
 
     @property
@@ -22,8 +22,8 @@ class NewDateTime:
 
     @month.setter
     def month(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Month can only be an instance of integer.")
+        message = "Month can only be an instance of integer."
+        self._validate_integer(value, message)
         self._month = value
 
     @property
@@ -32,8 +32,8 @@ class NewDateTime:
 
     @year.setter
     def year(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Year can only be an instance of integer.")
+        message = "Year can only be an instance of integer."
+        self._validate_integer(value, message)
         self._year = value
 
     @property
@@ -42,8 +42,8 @@ class NewDateTime:
 
     @hour.setter
     def hour(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Hour can only be an instance of integer.")
+        message = "Hour can only be an instance of integer."
+        self._validate_integer(value, message)
         self._hour = value
 
     @property
@@ -52,6 +52,10 @@ class NewDateTime:
 
     @minute.setter
     def minute(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Minute can only be an instance of integer.")
+        message = "Minute can only be an instance of integer."
+        self._validate_integer(value, message)
         self._minute = value
+
+    def _validate_integer(self, value, message):
+        if not isinstance(value, int):
+            raise TypeError(message)
