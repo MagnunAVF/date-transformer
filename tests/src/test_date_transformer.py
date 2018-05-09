@@ -27,6 +27,12 @@ class TestDateTransformer(unittest.TestCase):
 
         self.assertEqual(result, True)
 
+    def test_change_date_with_invalid_value_arg(self):
+        """It should raise an Exception when input minutes value is invalid."""
+
+        with self.assertRaises(TypeError):
+            self.date_transformer.change_date("01/03/2010 23:00", '-', "teste")
+
     def test_change_date_with_invalid_op_arg(self):
         """It should raise an Exception when input op is invalid"""
 

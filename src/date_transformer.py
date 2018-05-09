@@ -6,6 +6,11 @@ from src.exceptions.date_transformer_exceptions import *
 
 class DateTransformer:
     def change_date(self, date, op, value):
+        if not isinstance(value, int):
+            raise TypeError("Invalid minutes value. Minutes must be integer.")
+
+        minutes_value = abs(value)
+
         if op == "+":
             return True
         elif op == "-":
