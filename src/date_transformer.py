@@ -65,7 +65,7 @@ class DateTransformer:
             missing_days = limit_day - current_day
             days_to_sum = days_to_sum - missing_days
             current_month += 1
-            current_day = 1
+            current_day = 0
 
         month = current_month
         year = datetime.year + year_to_sum

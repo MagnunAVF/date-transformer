@@ -135,6 +135,18 @@ class TestDateTransformer(unittest.TestCase):
         self.assertEqual(result_datetime.day, 3)
         self.assertEqual(result_datetime.month, 3)
 
+    def test_add_to_date_from_days_to_month_sequential_transition(self):
+        """It should sum input minutes to datetime and correctly execute the
+        transition from days to month (with more than one month transaction)"""
+
+        datetime_31_days_month = NewDateTime(7, 5, 2101, 12, 13)
+
+        _62_days = 89280
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_31_days_month, _62_days)
+        self.assertEqual(result_datetime.day, 8)
+        self.assertEqual(result_datetime.month, 7)
+
     def test_date_extractor_from_str_with_invalid_str(self):
         """It should raise an exception when input string is invalid."""
 
