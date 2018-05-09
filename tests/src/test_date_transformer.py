@@ -90,3 +90,19 @@ class TestDateTransformer(unittest.TestCase):
 
         self.assertTupleEqual(self.date_transformer._extract_hours(
                                 exactly_one_hour), (1, 0))
+
+    def test_extract_days(self):
+        """It should return the days and the remainder hours."""
+
+        days_and_remainder_hours = 27
+        only_hours = 23
+        exactly_one_day = 24
+
+        self.assertTupleEqual(self.date_transformer._extract_days(
+                                only_hours), (0, 23))
+
+        self.assertTupleEqual(self.date_transformer._extract_days(
+                                days_and_remainder_hours), (1, 3))
+
+        self.assertTupleEqual(self.date_transformer._extract_days(
+                                exactly_one_day), (1, 0))

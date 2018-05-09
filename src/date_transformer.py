@@ -39,3 +39,10 @@ class DateTransformer:
             result = (minutes - remainder)/60
             return (int(result), remainder)
         return (0, minutes)
+
+    def _extract_days(self, hours):
+        if hours > 23:
+            remainder = hours % 24
+            result = (hours - remainder)/24
+            return (int(result), remainder)
+        return (0, hours)
