@@ -23,7 +23,7 @@ class TestDateTransformer(unittest.TestCase):
         """It should transform the dates respecting the rules of the domain."""
 
         result = self.date_transformer.change_date(
-                                                "30/05/1991 13:27", '+', 4000)
+                                                "30/05/1991 13:17", '+', 10)
 
         self.assertEqual(result, "30/05/1991 13:27")
 
@@ -38,6 +38,102 @@ class TestDateTransformer(unittest.TestCase):
 
         with self.assertRaises(InvalidOperatorException):
             self.date_transformer.change_date("01/03/2010 23:00", '?', 4000)
+
+    def test_add_to_date_from_minutes_to_hours_transition(self):
+        """It should sum input minutes to datetime and correctly execute the
+        transition from minutes to hours"""
+
+        datetime = NewDateTime(1, 1, 2001, 3, 34)
+
+        result_datetime = self.date_transformer._add_to_datetime(datetime, 10)
+        self.assertEqual(result_datetime.minute, 44)
+        self.assertEqual(result_datetime.hour, 3)
+
+        _3_hours = 180
+        result_datetime = self.date_transformer._add_to_datetime(
+                                                    datetime, _3_hours + 21)
+        self.assertEqual(result_datetime.minute, 55)
+        self.assertEqual(result_datetime.hour, 6)
+
+    def test_add_to_date_from_hours_to_days_transition(self):
+        """It should sum input minutes to datetime and correctly execute the
+        transition from hours to days"""
+
+        datetime = NewDateTime(4, 2, 2012, 5, 10)
+
+        _3_hours = 180
+        result_datetime = self.date_transformer._add_to_datetime(
+                                                            datetime, _3_hours)
+        self.assertEqual(result_datetime.hour, 8)
+        self.assertEqual(result_datetime.day, 4)
+
+        _2_days = 2880
+        result_datetime = self.date_transformer._add_to_datetime(
+                                                            datetime, _2_days)
+        self.assertEqual(result_datetime.hour, 5)
+        self.assertEqual(result_datetime.day, 6)
+
+    def test_add_to_date_from_days_to_years_transition(self):
+        """It should sum input minutes to datetime and correctly execute the
+        transition from days to years"""
+
+        datetime = NewDateTime(10, 5, 2101, 12, 13)
+
+        _3_days = 4320
+        result_datetime = self.date_transformer._add_to_datetime(
+                                                            datetime, _3_days)
+        self.assertEqual(result_datetime.day, 13)
+        self.assertEqual(result_datetime.year, 2101)
+
+        _5_years = 2628000
+        result_datetime = self.date_transformer._add_to_datetime(
+                                                            datetime, _5_years)
+        self.assertEqual(result_datetime.day, 10)
+        self.assertEqual(result_datetime.year, 2106)
+
+    def test_add_to_date_from_days_to_month_transition(self):
+        """It should sum input minutes to datetime and correctly execute the
+        transition from days to month"""
+
+        datetime_31_days_month = NewDateTime(7, 5, 2101, 12, 13)
+
+        _3_days = 4320
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_31_days_month, _3_days)
+        self.assertEqual(result_datetime.day, 10)
+        self.assertEqual(result_datetime.month, 5)
+
+        _37_days = 53280
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_31_days_month, _37_days)
+        self.assertEqual(result_datetime.day, 13)
+        self.assertEqual(result_datetime.month, 6)
+
+        datetime_30_days_month = NewDateTime(27, 4, 1970, 12, 13)
+
+        _2_days = 2880
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_30_days_month, _2_days)
+        self.assertEqual(result_datetime.day, 29)
+        self.assertEqual(result_datetime.month, 4)
+
+        _6_days = 8640
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_30_days_month, _6_days)
+        self.assertEqual(result_datetime.day, 3)
+        self.assertEqual(result_datetime.month, 5)
+
+        datetime_28_days_month = NewDateTime(25, 2, 1989, 12, 13)
+
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_28_days_month, _2_days)
+        self.assertEqual(result_datetime.day, 27)
+        self.assertEqual(result_datetime.month, 2)
+
+        result_datetime = self.date_transformer._add_to_datetime(
+                                            datetime_28_days_month, _6_days)
+        self.assertEqual(result_datetime.day, 3)
+        self.assertEqual(result_datetime.month, 3)
 
     def test_date_extractor_from_str_with_invalid_str(self):
         """It should raise an exception when input string is invalid."""
